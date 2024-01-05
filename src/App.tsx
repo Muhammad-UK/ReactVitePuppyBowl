@@ -26,6 +26,7 @@ function App() {
 
     window.addEventListener("hashchange", () => {
       idFromHash = +window.location.hash.slice(1);
+      console.log(idFromHash);
     });
   }, []);
 
