@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Title from './Title.tsx'
 import Players from './Players.tsx'
+import SinglePlayer from './SinglePlayer.tsx';
 
 function App() {
   const COHORT: string = "2309-AM";
   const puppyAPI: string = "https://fsa-puppy-bowl.herokuapp.com/api/" + COHORT;
 
   const [players, setPlayers] = useState([]);
-  const [id, setId] = useState(window.location.hash.slice(1));
+  const [id, setId] = useState(+window.location.hash.slice(1));
+  const [singlePlayer, setSinglePlayer] = useState(null);
 
   useEffect(()=> {
     const fetchPlayers = async () => {
@@ -23,14 +25,23 @@ function App() {
     fetchPlayers();
 
     window.addEventListener("hashchange", () => {
-      setId(window.location.hash.slice(1));
+      setId(+window.location.hash.slice(1));
     });
   }, []);
+
+  const handleBackClick = () => {
+    window.location.hash = '';
+    setSinglePlayer(null);
+  };
 
   return (
     <div>
       <Title />
-      <Players players={ players }/>
+      {singlePlayer ? (
+        <SinglePlayer singlePlayer={ singlePlayer } handleBackClick={handleBackClick} />
+      ):(
+        <Players players={ players } id={ id } setSinglePlayer={ setSinglePlayer }/>
+      )}
     </div>
   );
 }
