@@ -9,8 +9,8 @@ function App() {
   const puppyAPI: string = "https://fsa-puppy-bowl.herokuapp.com/api/" + COHORT;
 
   const [players, setPlayers] = useState([]);
-  const [id, setId] = useState(+window.location.hash.slice(1));
   const [singlePlayer, setSinglePlayer] = useState(null);
+  let idFromHash: number = +window.location.hash.slice(1);
 
   useEffect(()=> {
     const fetchPlayers = async () => {
@@ -25,7 +25,7 @@ function App() {
     fetchPlayers();
 
     window.addEventListener("hashchange", () => {
-      setId(+window.location.hash.slice(1));
+      idFromHash = +window.location.hash.slice(1);
     });
   }, []);
 
@@ -40,7 +40,7 @@ function App() {
       {singlePlayer ? (
         <SinglePlayer singlePlayer={ singlePlayer } handleBackClick={handleBackClick} />
       ):(
-        <Players players={ players } id={ id } setSinglePlayer={ setSinglePlayer }/>
+        <Players players={ players } setSinglePlayer={ setSinglePlayer }/>
       )}
     </div>
   );

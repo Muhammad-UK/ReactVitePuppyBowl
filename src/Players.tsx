@@ -1,10 +1,9 @@
 interface PlayersProps {
     players: any[];
-    id: number;
     setSinglePlayer: (player: any) => void;
   }
 
-const Players = ({ players, id, setSinglePlayer }: PlayersProps) => {
+const Players = ({ players, setSinglePlayer }: PlayersProps) => {
     return (
         <div className="players">
             {players.map((player: any)=> {
